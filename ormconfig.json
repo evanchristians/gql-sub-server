@@ -1,0 +1,7 @@
+{
+  "type": "postgres",
+  "username": "postgres",
+  "database": "gqlserv",
+  "entities": ["src/models/*.ts"],
+  "synchronize": true
+}

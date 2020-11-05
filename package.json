@@ -1,0 +1,23 @@
+{
+  "name": "gqlserv",
+  "version": "1.0.0",
+  "main": "index.js",
+  "license": "MIT",
+  "scripts": {
+    "dev": "nodemon -w src --ext ts --exec ts-node src/index.ts"
+  },
+  "dependencies": {
+    "apollo-server": "^2.19.0",
+    "bcrypt": "^5.0.0",
+    "class-validator": "^0.12.2",
+    "pg": "^8.4.2",
+    "type-graphql": "^1.1.0",
+    "typeorm": "^0.2.29"
+  },
+  "devDependencies": {
+    "@types/bcrypt": "^3.0.0",
+    "nodemon": "^2.0.6",
+    "ts-node": "^9.0.0",
+    "typescript": "^4.0.5"
+  }
+}

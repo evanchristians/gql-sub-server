@@ -1,4 +1,3 @@
-import "reflect-metadata";
 import { ApolloServer } from "apollo-server-express";
 import bodyParser from "body-parser";
 import cookieParser from "cookie-parser";
@@ -6,15 +5,16 @@ import express from "express";
 import { execute, subscribe } from "graphql";
 import { PubSub } from "graphql-subscriptions";
 import { createServer } from "http";
+import "reflect-metadata";
 import { SubscriptionServer } from "subscriptions-transport-ws";
 import { buildSchema, GraphQLISODateTime } from "type-graphql";
 import { createConnection } from "typeorm";
-import { PORT } from "./constants";
+import { PORT, TYPE_ORM_CONFIG } from "./constants";
 import { MessageResolver } from "./resolvers/MessageResolver";
 import { UserResolver } from "./resolvers/UserResolver";
 
 const App = async () => {
-  await createConnection();
+  await createConnection(TYPE_ORM_CONFIG);
   const app = express();
   app.use(cookieParser());
   app.use("/graphql", bodyParser.json());

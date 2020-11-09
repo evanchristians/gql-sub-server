@@ -2,7 +2,7 @@ import { ConnectionOptions, getConnectionOptions } from "typeorm";
 import dotenv from "dotenv";
 dotenv.config();
 
-export const PORT = 5000;
+export const PORT = process.env.port || 5000;
 export const IS_PROD = process.env.ENV === "production";
 
 const getOptions = async () => {

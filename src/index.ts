@@ -9,7 +9,7 @@ import "reflect-metadata";
 import { SubscriptionServer } from "subscriptions-transport-ws";
 import { buildSchema, GraphQLISODateTime } from "type-graphql";
 import { createConnection } from "typeorm";
-import { PORT, TYPE_ORM_CONFIG } from "./constants";
+import { CLIENT_URI, PORT, TYPE_ORM_CONFIG } from "./constants";
 import { MessageResolver } from "./resolvers/MessageResolver";
 import { UserResolver } from "./resolvers/UserResolver";
 
@@ -36,7 +36,7 @@ const App = async () => {
   apolloServer.applyMiddleware({
     app,
     cors: {
-      origin: "http://localhost:3000",
+      origin: CLIENT_URI,
       credentials: true,
     },
   });

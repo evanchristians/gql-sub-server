@@ -26,3 +26,7 @@ const getOptions = async () => {
 };
 
 export const TYPE_ORM_CONFIG = getOptions();
+
+export const CLIENT_URI = IS_PROD
+  ? "https://gql-sub-client.vercel.app/"
+  : "http://localhost:3000";

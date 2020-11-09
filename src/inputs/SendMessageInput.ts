@@ -1,10 +1,10 @@
 import { Field, InputType } from "type-graphql";
 
 @InputType()
-export class CreateUserInput {
+export class SendMessageInput {
   @Field()
-  username: string;
+  sender: string;
 
   @Field()
-  password: string;
+  text: string;
 }

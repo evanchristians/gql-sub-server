@@ -14,7 +14,8 @@ import { MessageResolver } from "./resolvers/MessageResolver";
 import { UserResolver } from "./resolvers/UserResolver";
 
 const App = async () => {
-  await createConnection(TYPE_ORM_CONFIG);
+  const typeOrmConfig = await TYPE_ORM_CONFIG;
+  await createConnection(typeOrmConfig);
   const app = express();
   app.use(cookieParser());
   app.use("/graphql", bodyParser.json());

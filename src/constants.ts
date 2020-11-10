@@ -30,3 +30,6 @@ export const TYPE_ORM_CONFIG = getOptions();
 export const CLIENT_URI = IS_PROD
   ? "https://gql-sub-client.vercel.app"
   : "http://localhost:3000";
+
+export const TOKEN_SECRET = process.env.TOKEN_SECRET || "123abc"
+export const REFRESH_TOKEN_SECRET = process.env.REFRESH_TOKEN_SECRET || "r123abc"

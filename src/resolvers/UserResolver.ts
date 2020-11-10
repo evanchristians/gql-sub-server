@@ -1,12 +1,12 @@
 import bcrypt from "bcrypt";
-import { sign, verify } from "jsonwebtoken";
-import { UserResponse } from "../types/UserResponse";
 import { Arg, Ctx, Mutation, Query, Resolver } from "type-graphql";
 import { Context } from "../context";
 import { LoginInput } from "../inputs/LoginInput";
 import { RegisterInput } from "../inputs/RegisterInput";
 import { UpdateUserInput } from "../inputs/UpdateUserInput";
+import { auth } from "../lib/auth";
 import { User } from "../models/User";
+import { UserResponse } from "../types/UserResponse";
 
 @Resolver()
 export class UserResolver {
@@ -16,15 +16,25 @@ export class UserResolver {
     return users;
   }
 
-  @Query(() => User, { nullable: true })
-  me(@Ctx() { req }: Context) {
-    const token: any = verify(req.cookies["token"], "poggers");
-    if (!token?.userId) {
-      throw new Error("Invalid Token");
+  @Query(() => UserResponse, { nullable: true })
+  me(@Ctx() { userId }: Context) {
+    if (!userId) {
+      return false;
     }
-    const user = User.findOne(token.userId);
-    if (!user) throw new Error("User not found!");
-    return user;
+
+    const user = User.findOne(userId);
+
+    if (!user)
+      return {
+        errors: [
+          {
+            field: "username",
+            message: "User not found!",
+          },
+        ],
+      };
+
+    return { user };
   }
 
   @Mutation(() => Boolean)
@@ -61,8 +71,10 @@ export class UserResolver {
     const user = User.create(data);
     await user.save();
 
-    const token = sign({ userId: user.id }, "poggers", { expiresIn: "2h" });
+    const { token, refreshToken } = auth(user);
+
     res.cookie("token", token);
+    res.cookie("refresh-token", refreshToken);
 
     return { user };
   }
@@ -100,9 +112,11 @@ export class UserResolver {
         ],
       };
 
-    const token = sign({ userId: user.id }, "poggers", { expiresIn: "2h" });
+    const { token, refreshToken } = auth(user);
 
     res.cookie("token", token);
+    res.cookie("refresh-token", refreshToken);
+
     return { user };
   }
 }

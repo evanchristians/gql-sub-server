@@ -19,4 +19,8 @@ export class User extends BaseEntity {
   @Field(() => Boolean)
   @Column({ default: true })
   active: boolean;
+
+  @Field(() => Number)
+  @Column({ default: 0 })
+  count: number;
 }

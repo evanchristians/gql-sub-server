@@ -19,7 +19,7 @@ export class UserResolver {
   @Query(() => UserResponse, { nullable: true })
   me(@Ctx() { userId }: Context) {
     if (!userId) {
-      return false;
+      return null;
     }
 
     const user = User.findOne(userId);
@@ -70,9 +70,7 @@ export class UserResolver {
     data.password = hash;
     const user = User.create(data);
     await user.save();
-
     const { token, refreshToken } = auth(user);
-
     res.cookie("token", token);
     res.cookie("refresh-token", refreshToken);
 
@@ -112,11 +110,27 @@ export class UserResolver {
         ],
       };
 
-    const { token, refreshToken } = auth(user);
-
+      const { token, refreshToken } = auth(user);
     res.cookie("token", token);
     res.cookie("refresh-token", refreshToken);
 
     return { user };
+  }
+
+  @Mutation(() => Boolean)
+  async invalidateTokens(@Ctx() { userId }: Context) {
+    if (!userId) return false;
+    await User.update(userId, { count: () => "count + 1" });
+    return true;
+  }
+
+  @Mutation(() => Boolean)
+  async logout(@Ctx() { res, userId }: Context) {
+    res.clearCookie("token");
+    res.clearCookie("refresh-token");
+    if (userId) {
+      userId = undefined;
+    }
+    return true;
   }
 }

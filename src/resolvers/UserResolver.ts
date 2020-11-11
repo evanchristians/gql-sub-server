@@ -71,8 +71,10 @@ export class UserResolver {
     const user = User.create(data);
     await user.save();
     const { token, refreshToken } = auth(user);
-    res.cookie("token", token);
-    res.cookie("refresh-token", refreshToken);
+    console.log(
+      res.cookie("token", token),
+      res.cookie("refresh-token", refreshToken)
+    );
 
     return { user };
   }
@@ -110,9 +112,13 @@ export class UserResolver {
         ],
       };
 
-      const { token, refreshToken } = auth(user);
-    res.cookie("token", token);
-    res.cookie("refresh-token", refreshToken);
+    const { token, refreshToken } = auth(user);
+    console.log(
+      token,
+      res.cookie("token", token),
+      refreshToken,
+      res.cookie("refresh-token", refreshToken)
+    );
 
     return { user };
   }

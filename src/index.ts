@@ -11,7 +11,7 @@ import { SubscriptionServer } from "subscriptions-transport-ws";
 import { buildSchema, GraphQLISODateTime } from "type-graphql";
 import { createConnection } from "typeorm";
 import {
-  CLIENT_URI,
+  // CLIENT_URI,
   PORT,
   REFRESH_TOKEN_SECRET,
   TOKEN_SECRET,
@@ -82,7 +82,6 @@ const App = async () => {
   apolloServer.applyMiddleware({
     app,
     cors: {
-      origin: CLIENT_URI,
       credentials: true,
     },
   });

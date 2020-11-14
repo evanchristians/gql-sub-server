@@ -28,7 +28,7 @@ const getOptions = async () => {
 export const TYPE_ORM_CONFIG = getOptions();
 
 export const CLIENT_URI = IS_PROD
-  ? "https://gql-sub-client.evanchristians.co.za/"
+  ? "https://gql-sub-client.evanchristians.co.za"
   : "http://localhost:3000";
 
 export const TOKEN_SECRET = process.env.TOKEN_SECRET || "123abc"

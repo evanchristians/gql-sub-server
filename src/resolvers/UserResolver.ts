@@ -71,10 +71,8 @@ export class UserResolver {
     const user = User.create(data);
     await user.save();
     const { token, refreshToken } = auth(user);
-    console.log(
-      res.cookie("token", token, { httpOnly: true }),
-      res.cookie("refresh-token", refreshToken, { httpOnly: true })
-    );
+    res.cookie("token", token, { httpOnly: true });
+    res.cookie("refresh-token", refreshToken, { httpOnly: true });
 
     return { user };
   }
